@@ -3,8 +3,9 @@ name: Build Lyrs
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, actions ]
   pull_request:
+
 
 env:
   NODE_VERSION: "22.x"
@@ -83,6 +84,11 @@ jobs:
         if: startsWith(matrix.os, 'windows') && github.repository != 'organization/lyrs'
         run: |
           npm run dist:win
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: build
+          path: build
 
   release:
     runs-on: ubuntu-latest
